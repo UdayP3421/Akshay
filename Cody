@@ -1,0 +1,56 @@
+import java.util.*;
+
+public class Main {
+    public static int minLength(String S) {
+        int result = 0; // Start with result initialized to 0
+
+        // Get all unique characters in the string
+        Set<Character> uniqueChars = new HashSet<>();
+        for (char c : S.toCharArray()) {
+            uniqueChars.add(c);
+        }
+
+        // Convert the set to a list
+        List<Character> uniqueCharList = new ArrayList<>(uniqueChars);
+
+        // Initialize the minimum length with the maximum possible value (the original length)
+        int minLen = S.length();
+
+        // Iterate over all pairs of unique characters
+        for (int i = 0; i < uniqueCharList.size(); i++) {
+            for (int j = i + 1; j < uniqueCharList.size(); j++) {
+                char c1 = uniqueCharList.get(i);
+                char c2 = uniqueCharList.get(j);
+
+                // Create a new string excluding c1 and c2
+                StringBuilder newString = new StringBuilder();
+                for (char c : S.toCharArray()) {
+                    if (c != c1 && c != c2) {
+                        newString.append(c);
+                    }
+                }
+
+                // Calculate the length after removing c1 and c2
+                int currentLen = newString.length();
+
+                // Update the minimum length
+                if (currentLen < minLen) {
+                    minLen = currentLen;
+                }
+            }
+        }
+
+        // Now, set result to the minimum length found
+        result = minLen;
+
+        return result;  // Return the minimum length found
+    }
+
+    // Non-editable code starts here
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String S = scanner.nextLine();
+        System.out.println(minLength(S));
+    }
+    // Non-editable code ends here
+}
